@@ -1,0 +1,114 @@
+
+
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+    }
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      width: 300px;
+      margin: 50px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #333;
+      border-radius: 10px;
+      
+    }
+    .calculator input {
+      grid-column: 1 / -1;
+      font-size: 30px;
+      padding: 10px;
+      text-align: right;
+      background-color: #444;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    .calculator button {
+      font-size: 18px;
+      padding: 20px;
+      background-color: #555;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled aria-live="assertive">
+    <button onclick="clearDisplay()" aria-label="Clear">C</button>
+    <button onclick="backspace()" aria-label="Backspace">←</button>
+     <button onclick="appendPercentage()" aria-label="Percentage">%</button>
+    <button onclick="appendOperator('/')" aria-label="Divide">/</button>
+    <button onclick="appendNumber(7)" aria-label="7">7</button>
+    <button onclick="appendNumber(8)" aria-label="8">8</button>
+    <button onclick="appendNumber(9)" aria-label="9">9</button>
+    <button onclick="appendOperator('*')" aria-label="Multiply">×</button>
+    <button onclick="appendNumber(4)" aria-label="4">4</button>
+    <button onclick="appendNumber(5)" aria-label="5">5</button>
+    <button onclick="appendNumber(6)" aria-label="6">6</button>
+    <button onclick="appendOperator('-')" aria-label="Subtract">−</button>
+    <button onclick="appendNumber(1)" aria-label="1">1</button>
+    <button onclick="appendNumber(2)" aria-label="2">2</button>
+    <button onclick="appendNumber(3)" aria-label="3">3</button>
+    <button onclick="appendOperator('+' )" aria-label="Add">+</button>
+    <button onclick="appendNumber(0)" style="grid-column: span 2;" aria-label="0">0</button>
+    <button onclick="appendDecimalPoint()" aria-label="Decimal">.</button>
+    <button onclick="evaluateExpression()" aria-label="Equal">=</button>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function appendNumber(number) {
+      display.value += number;
+    }
+
+    function appendOperator(operator) {
+      if (display.value && !isNaN(display.value.slice(-1))) {
+        display.value += operator;
+      }
+    }
+
+    function appendDecimalPoint() {
+      if (display.value && !display.value.includes('.')) {
+        display.value += '.';
+      }
+    }
+	    function appendPercentage() {
+      if (display.value) {
+        let currentValue = parseFloat(display.value);
+        display.value = String(currentValue / 100);
+      }
+    }
+
+    function evaluateExpression() {
+      try {
+        let result = eval(display.value);
+        if (result !== undefined) {
+          display.value = result;
+        }
+      } catch (error) {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
